@@ -12,7 +12,7 @@ int main() {
   printf("Initial array\n");
   printArray(arr, N, ',');
 
-  int* out = mergeSort(arr, N);
+  int* out = quickSort(arr, N);
 
   printf("Sorted array\n");
   printArray(out, N, ',');

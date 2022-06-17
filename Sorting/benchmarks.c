@@ -18,7 +18,7 @@ int main() {
   int* out = NULL;
 
   clock_t tic, toc;
-  double t1, t2, t3;
+  double t1, t2, t3, t4;
 
   printf("Size of array: %d\n", N);
 
@@ -34,14 +34,20 @@ int main() {
   t2 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
 
   tic = clock();
-  out = bubbleSort(in, N);
+  out = quickSort(in, N);
   toc = clock();
   t3 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+
+  tic = clock();
+  out = bubbleSort(in, N);
+  toc = clock();
+  t4 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
 
   // Print output
   printf("Insertion sort: %lfms\n", t1);
   printf("Merge sort: %lfms\n", t2);
-  printf("Bubble sort: %lfms\n", t3);
+  printf("Quick sort: %lfms\n", t3);
+  printf("Bubble sort: %lfms\n", t4);
 
   return 0;
 }
