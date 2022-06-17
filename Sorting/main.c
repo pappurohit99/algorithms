@@ -14,7 +14,7 @@ int main() {
   }
 
   // Perform sort
-  out = mergeSort(in, N);
+  out = bubbleSort(in, N);
 
   printf("\nsorted array: ");
   for (int i = 0; i < N; i++) {

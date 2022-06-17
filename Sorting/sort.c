@@ -25,26 +25,39 @@ int* insertionSort(int* input, int n) {
 }
 
 int* mergeSort(int* input, int n) {
+  assert(n > 0);
   int low = 0;
   int high = n - 1;
-  split(input, low, high);
+  hSplit(input, low, high);
+  return input;
+}
+
+int* bubbleSort(int* input, int N) {
+  assert(N > 0);
+  for (int i = 0; i < N - 1; i++) {
+    for (int j = 0; j < N - 1; j++) {
+      if (input[j] > input[j+1]) {
+        swap(&input[j], &input[j+1]);
+      }
+    }
+  }
   return input;
 }
 
 //*****************//
 // helper functions//
 //*****************//
-void split(int* input, int low, int high) {
+void hSplit(int* input, int low, int high) {
   int mid;
   if (low < high) {
     mid = low + (high - low) / 2;
-    split(input, low, mid);
-    split(input, mid + 1, high);
-    merge(input, low, mid, high);
+    hSplit(input, low, mid);
+    hSplit(input, mid + 1, high);
+    hMerge(input, low, mid, high);
   }
 }
 
-void merge(int* arr, int low, int mid, int high) {
+void hMerge(int* arr, int low, int mid, int high) {
   const int N1 = mid - low + 1;
   const int N2 = high - mid;
   // int* arr1 = (int*)malloc(N1 * sizeof(int));
@@ -76,10 +89,10 @@ void merge(int* arr, int low, int mid, int high) {
       j++;
     }
   }
-  while (i<N1) {
+  while (i < N1) {
     arr[k++] = arr1[i++];
   }
-  while (j<N2) {
+  while (j < N2) {
     arr[k++] = arr2[j++];
   }
 }
