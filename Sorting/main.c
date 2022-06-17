@@ -1,26 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+#include "../utils.h"
 #include "sort.h"
 
 int main() {
-  // Setup init array
-  int in[] = {6, 8, 1, 4, 3, 7, 2, 5};
-  const int N = sizeof(in) / sizeof(in[0]);
-  int *out = NULL;
+  int arr[] = {6, 7, 2, 5, 3, 1, 8, 4};
+  const int N = sizeof(arr) / sizeof(arr[0]);
 
-  printf("initial array: ");
-  for (int i = 0; i < N; i++) {
-    printf("%d, ", in[i]);
-  }
+  printf("Initial array\n");
+  printArray(arr, N, ',');
 
-  // Perform sort
-  out = bubbleSort(in, N);
+  int* out = mergeSort(arr, N);
 
-  printf("\nsorted array: ");
-  for (int i = 0; i < N; i++) {
-    printf("%d, ", out[i]);
-  }
-  printf("\n");
+  printf("Sorted array\n");
+  printArray(out, N, ',');
 
   return 0;
 }
