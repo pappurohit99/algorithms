@@ -12,10 +12,10 @@ int main() {
   printf("Initial array\n");
   printArray(arr, N, ',');
 
-  int* out = selectionSort(arr, N);
+  selectionSort(arr, N);
 
   printf("Sorted array\n");
-  printArray(out, N, ',');
+  printArray(arr, N, ',');
 
   return 0;
 }

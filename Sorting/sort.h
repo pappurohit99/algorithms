@@ -1,12 +1,12 @@
 #ifndef SORT_H
 #define SORT_H
 
-// Main functions
-int* insertionSort(int* arr, int N);
-int* mergeSort(int* arr, int N);
-int* quickSort(int* arr, int N);
-int* bubbleSort(int* arr, int N);
-int* selectionSort(int* arr, int N);
+// Main APIs
+void insertionSort(int* arr, int N);
+void mergeSort(int* arr, int N);
+void quickSort(int* arr, int N);
+void bubbleSort(int* arr, int N);
+void selectionSort(int* arr, int N);
 
 // helper functions
 

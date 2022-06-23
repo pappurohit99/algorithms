@@ -6,7 +6,8 @@
 
 #include "../utils.h"
 
-int* insertionSort(int* input, int n) {
+void insertionSort(int* input, int n) {
+  // out-place algorithm. requires O(n) extra space
   assert(n > 0);
 
   // Initialize sorted array
@@ -21,43 +22,39 @@ int* insertionSort(int* input, int n) {
       swap(&arr[j], &arr[j + 1]);
     }
   }
-  return arr;
+  input = arr;
 }
 
-int* mergeSort(int* input, int n) {
+void mergeSort(int* arr, int n) {
   assert(n > 0);
   int low = 0;
   int high = n - 1;
-  hSplit(input, low, high);
-  return input;
+  hSplit(arr, low, high);
 }
 
-int* quickSort(int* input, int n) {
+void quickSort(int* arr, int n) {
   assert(n > 0);
   int low = 0;
   int high = n - 1;
-  hQuickSort(input, low, high);
-  return input;
+  hQuickSort(arr, low, high);
 }
 
-int* bubbleSort(int* input, int N) {
+void bubbleSort(int* arr, int N) {
   assert(N > 0);
   for (int i = 0; i < N - 1; i++) {
     for (int j = 0; j < N - 1; j++) {
-      if (input[j] > input[j + 1]) {
-        swap(&input[j], &input[j + 1]);
+      if (arr[j] > arr[j + 1]) {
+        swap(&arr[j], &arr[j + 1]);
       }
     }
   }
-  return input;
 }
 
-int* selectionSort(int* arr, int N) {
-  assert(N>0);
+void selectionSort(int* arr, int N) {
+  assert(N > 0);
   for (int i = 0; i < N; i++) {
     swap(&arr[minIndex(arr, i, N)], &arr[i]);
   }
-  return arr;
 }
 
 //*****************//
@@ -122,7 +119,7 @@ void hQuickSort(int* input, int low, int high) {
 }
 
 int hRandomize(int* arr, int low, int high) {
-  int idx = low + (rand() % (high -low));
+  int idx = low + (rand() % (high - low));
   swap(&arr[idx], &arr[high]);
   return hPartition(arr, low, high);
 }
