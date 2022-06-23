@@ -6,6 +6,7 @@ int* insertionSort(int* arr, int N);
 int* mergeSort(int* arr, int N);
 int* quickSort(int* arr, int N);
 int* bubbleSort(int* arr, int N);
+int* selectionSort(int* arr, int N);
 
 // helper functions
 
@@ -14,8 +15,11 @@ void hSplit(int* arr, int low, int high);
 void hMerge(int* arr, int low, int mid, int high);
 
 // Quick sort
-
 int hPartition(int* arr, int low, int high);
 int hRandomize(int* arr, int low, int high);
 void hQuickSort(int* arr, int low, int high);
+
+// Selection sort
+int minIndex(int* arr, int start, int end);
+
 #endif

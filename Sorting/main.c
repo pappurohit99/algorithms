@@ -1,4 +1,4 @@
-#include <stdio.h>
+  #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -12,7 +12,7 @@ int main() {
   printf("Initial array\n");
   printArray(arr, N, ',');
 
-  int* out = quickSort(arr, N);
+  int* out = selectionSort(arr, N);
 
   printf("Sorted array\n");
   printArray(out, N, ',');

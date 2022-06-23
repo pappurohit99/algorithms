@@ -52,6 +52,14 @@ int* bubbleSort(int* input, int N) {
   return input;
 }
 
+int* selectionSort(int* arr, int N) {
+  assert(N>0);
+  for (int i = 0; i < N; i++) {
+    swap(&arr[minIndex(arr, i, N)], &arr[i]);
+  }
+  return arr;
+}
+
 //*****************//
 // helper functions//
 //*****************//
@@ -132,4 +140,14 @@ int hPartition(int* arr, int low, int high) {
   i++;
   swap(&arr[i], &arr[high]);
   return i;
+}
+
+int minIndex(int* arr, int start, int end) {
+  int idx = start;
+  for (int i = start + 1; i < end; i++) {
+    if (arr[i] < arr[idx]) {
+      idx = i;
+    }
+  }
+  return idx;
 }
