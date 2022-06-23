@@ -16,5 +16,6 @@ void hMerge(int* arr, int low, int mid, int high);
 // Quick sort
 
 int hPartition(int* arr, int low, int high);
+int hRandomize(int* arr, int low, int high);
 void hQuickSort(int* arr, int low, int high);
 #endif

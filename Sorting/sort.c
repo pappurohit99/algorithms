@@ -107,10 +107,16 @@ void hMerge(int* arr, int low, int mid, int high) {
 void hQuickSort(int* input, int low, int high) {
   if (low < high) {
     // partition and find pivot index
-    int mid = hPartition(input, low, high);
+    int mid = hRandomize(input, low, high);
     hQuickSort(input, low, mid - 1);
     hQuickSort(input, mid + 1, high);
   }
+}
+
+int hRandomize(int* arr, int low, int high) {
+  int idx = low + (rand() % (high -low));
+  swap(&arr[idx], &arr[high]);
+  return hPartition(arr, low, high);
 }
 
 int hPartition(int* arr, int low, int high) {
