@@ -42,17 +42,26 @@ void quickSort(int* arr, int n) {
 void bubbleSort(int* arr, int N) {
   assert(N > 0);
   for (int i = 0; i < N - 1; i++) {
+    int swapped = 0;
     for (int j = 0; j < N - 1; j++) {
       if (arr[j] > arr[j + 1]) {
         swap(&arr[j], &arr[j + 1]);
+        swapped = 1;
       }
+    }
+    // Minor optimization to avoid extra passes, if array is already sorted
+    if (!swapped) {
+      // Array is sorted. Exit function
+      break;
     }
   }
 }
 
 void selectionSort(int* arr, int N) {
   assert(N > 0);
-  for (int i = 0; i < N; i++) {
+  // Last element would be in the right place,
+  // swapping would be unnecessary
+  for (int i = 0; i < N - 1; i++) {
     swap(&arr[minIndex(arr, i, N)], &arr[i]);
   }
 }
