@@ -1,6 +1,8 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+#include <math.h>
 
 #include "sort.h"
 #include "../utils.h"
@@ -10,7 +12,17 @@ void copyArr(int* src, int* dest, int n);
 int main() {
 
   // Setup test data
-  const int N = 10000;
+  int n;
+  printf("Enter order of magnitude (between 0 to 6): ");
+  scanf_s("%d", &n);
+  int N = 100000;
+  if (n >= 0 && n <= 6) {
+    N = (int)pow(10, n);
+  }
+  else {
+      printf("Defaulting to 10^5\n");
+  }
+
   int* in = (int*)malloc(N * sizeof(int));
   for (int i = 0; i < N; i++) {
     in[i] = rand() % N;
@@ -64,6 +76,10 @@ int main() {
 
   free(in);
   free(clone);
+
+  printf("Type quit to exit\n");
+  char s[10];
+  scanf_s("%s", s);
 
   return 0;
 }
