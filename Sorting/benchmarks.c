@@ -80,6 +80,7 @@ int main() {
   return 0;
 }
 
+// Utility function to copy elements from source array to destination array
 void copyArr(int* src, int* dest, int n) {
   for (int i = 0; i < n; i++) {
     dest[i] = src[i];
