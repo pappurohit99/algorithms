@@ -1,7 +1,6 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include <math.h>
 
 #include "sort.h"
@@ -14,7 +13,7 @@ int main() {
   // Setup test data
   int n;
   printf("Enter order of magnitude (between 0 to 6): ");
-  scanf_s("%d", &n);
+  scanf("%d", &n);
   int N = 100000;
   if (n >= 0 && n <= 6) {
     N = (int)pow(10, n);
@@ -39,39 +38,37 @@ int main() {
   // Run benchmarks
   copyArr(in, clone, N);
   tic = clock();
-  insertionSort(clone, N);
-  toc = clock();
-  t1 = (((double)(toc - tic)) / CLOCKS_PER_SEC) * 1000;
-
-  copyArr(in, clone, N);
-  tic = clock();
   mergeSort(clone, N);
   toc = clock();
   t2 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Merge sort: %lfms\n", t2);
 
   copyArr(in, clone, N);
   tic = clock();
   quickSort(clone, N);
   toc = clock();
   t3 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Quick sort: %lfms\n", t3);
+  
+  copyArr(in, clone, N);
+  tic = clock();
+  insertionSort(clone, N);
+  toc = clock();
+  t1 = (((double)(toc - tic)) / CLOCKS_PER_SEC) * 1000;
+  printf("Insertion sort: %lfms\n", t1);
 
   copyArr(in, clone, N);
   tic = clock();
   bubbleSort(clone, N);
   toc = clock();
   t4 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Bubble sort: %lfms\n", t4);
 
   copyArr(in, clone, N);
   tic = clock();
   selectionSort(clone, N);
   toc = clock();
   t5 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-
-  // Print output
-  printf("Insertion sort: %lfms\n", t1);
-  printf("Merge sort: %lfms\n", t2);
-  printf("Quick sort: %lfms\n", t3);
-  printf("Bubble sort: %lfms\n", t4);
   printf("Selection sort: %lfms\n", t5);
 
   free(in);
@@ -79,7 +76,7 @@ int main() {
 
   printf("Type quit to exit\n");
   char s[10];
-  scanf_s("%s", s);
+  scanf("%s", s);
 
   return 0;
 }
