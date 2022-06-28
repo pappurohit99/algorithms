@@ -1,6 +1,10 @@
 # Prerequisites
-- `clang -Wall -c utils.c`
-- While compiling `foo.c`, use
-```bash
-clang -Wall foo.c ../utils.h -o foo.out
-```
+
+1. For Linux/Unix - `gcc`/`clang`
+2. For Windows - Visual Studio / `gcc` equivalent
+
+# Build
+Go to respective directory and run
+`make build`
+
+`.out` files are generated in `derived` folder
