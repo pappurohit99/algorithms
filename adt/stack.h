@@ -1,29 +1,30 @@
 #ifndef STACK_HPP
 #define STACK_HPP
 
-typedef struct StackStructure {
+typedef struct StackStructure
+{
 	int *arr;
 	int length;
 	int capacity;
 } stack;
 
 // Constructor
-stack* createStack(int);
+stack *createStack(int);
 
 // Access modifiers
-stack* push(stack* s, const int el);
-stack* pop(stack* s);
+stack *push(stack *s, const int el);
+stack *pop(stack *s);
 
 // Peek
-int peek(stack* s);
+int peek(stack *s);
 
 // Query
-int isFull(stack* s);
-int isEmpty(stack *s);
+int stack_isFull(stack *s);
+int stack_isEmpty(stack *s);
 
 // Destructor
-void deleteStack(stack*);
+void deleteStack(stack *);
 
 // Utility APIS
-void printStack(stack*, char);
+void printStack(stack *, char);
 #endif

@@ -20,7 +20,7 @@ stack *createStack(const int N)
 // Main APIs
 stack *push(stack *pStack, const int el)
 {
-	if (!isFull(pStack))
+	if (!stack_isFull(pStack))
 	{
 		pStack->arr[pStack->length] = el;
 		pStack->length++;
@@ -30,7 +30,7 @@ stack *push(stack *pStack, const int el)
 
 stack *pop(stack *pStack)
 {
-	if (!isEmpty(pStack))
+	if (!stack_isEmpty(pStack))
 	{
 		pStack->length--;
 	}
@@ -39,19 +39,19 @@ stack *pop(stack *pStack)
 
 int peek(stack *pStack)
 {
-	if (!isEmpty(pStack))
+	if (!stack_isEmpty(pStack))
 	{
 		return pStack->arr[pStack->length - 1];
 	}
 	return INT_MIN;
 }
 
-int isFull(stack *pStack)
+int stack_isFull(stack *pStack)
 {
 	return pStack->length == pStack->capacity;
 }
 
-int isEmpty(stack *pStack)
+int stack_isEmpty(stack *pStack)
 {
 	return pStack->length == 0;
 }
