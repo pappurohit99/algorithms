@@ -35,7 +35,7 @@ void testList()
 	node *listNode = createList();
 	for (int i = 1; i <= 5; i++)
 	{
-		listNode = list_insert(listNode, i * i, list_size(listNode));
+		listNode = list_insert(listNode, i * i, 0);
 	}
 	printList(listNode);
 }

@@ -3,9 +3,7 @@ CFLAGS = -Wall -g -std=c11
 clean:
 	rm -rf derived
 
-build: main
-
-main: stack list
+build: stack list
 	gcc $(CFLAGS) main.c derived/*.o -o derived/main.out
 
 utils:

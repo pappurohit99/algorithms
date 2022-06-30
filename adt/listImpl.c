@@ -56,18 +56,57 @@ node *list_insert(node *head, int key, int pos)
     return head;
 }
 
-node* list_remove(node* head, int key) {
-    node* ptr = head;
+node *list_remove(node *head, int key)
+{
+    node *ptr = head;
     assert(head != NULL);
-    if (head->data == key) {
+    if (head->data == key)
+    {
         return head->next;
     }
     while (ptr->next)
     {
-        if (ptr->next->data == key) {
+        if (ptr->next->data == key)
+        {
             ptr->next = ptr->next->next;
             break;
         }
+    }
+    return head;
+}
+
+node *list_removeAt(node *head, int pos)
+{
+    node *ptr = head;
+    assert(head != NULL);
+    if (pos == 0)
+    {
+        return head->next;
+    }
+    int ctr = 0;
+    while (ptr->next)
+    {
+        if (ctr == pos)
+        {
+            ptr->next = ptr->next->data;
+            break;
+        }
+        ctr++;
+    }
+    return head;
+}
+
+node *list_replace(node *head, int key, int value)
+{
+    node *ptr = head;
+    while (ptr)
+    {
+        if (ptr->data == key)
+        {
+            ptr->data = value;
+            return head;
+        }
+        ptr = ptr->next;
     }
     return head;
 }
@@ -88,19 +127,10 @@ int list_isEmpty(node *head)
     return head == NULL;
 }
 
-node *list_replace(node *head, int key, int value)
+int list_isFull(node *head)
 {
-    node *ptr = head;
-    while (ptr)
-    {
-        if (ptr->data == key)
-        {
-            ptr->data = value;
-            return head;
-        }
-        ptr = ptr->next;
-    }
-    return head;
+    node *tNode = (node *)malloc(sizeof(node));
+    return tNode == NULL;
 }
 
 // Utility APIs
