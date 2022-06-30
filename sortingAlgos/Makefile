@@ -1,4 +1,4 @@
-CFLAGS = -Wall -g -std=c11
+CFLAGS = -Wall -g -std=c11 -fdiagnostics-color=always
 
 clean:
 	rm -rf derived
