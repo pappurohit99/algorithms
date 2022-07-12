@@ -5,6 +5,6 @@
 
 # Build
 Go to respective directory and run
-`make build`
+`make clean build`
 
 `.out` files are generated in `derived` folder
