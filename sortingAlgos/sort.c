@@ -6,72 +6,102 @@
 
 #include "../utils.h"
 
-void insertionSort(int* input, int n) {
+void insertionSort(int *input, int n)
+{
   // out-place algorithm. requires O(n) extra space
   assert(n > 0);
 
   // Initialize sorted array
-  int* arr = (int*)malloc(n * sizeof(int));
+  int *arr = (int *)malloc(n * sizeof(int));
 
   // Initialize first value
   arr[0] = input[0];
-  for (int i = 1; i < n; i++) {
+  for (int i = 1; i < n; i++)
+  {
     arr[i] = input[i];
     int j = i;
-    while (j-- && arr[j] > arr[j + 1]) {
+    while (j-- && arr[j] > arr[j + 1])
+    {
       swap(&arr[j], &arr[j + 1]);
     }
   }
   input = arr;
 }
 
-void mergeSort(int* arr, int n) {
+void mergeSort(int *arr, int n)
+{
   assert(n > 0);
   int low = 0;
   int high = n - 1;
   hSplit(arr, low, high);
 }
 
-void quickSort(int* arr, int n) {
+void quickSort(int *arr, int n)
+{
   assert(n > 0);
   int low = 0;
   int high = n - 1;
   hQuickSort(arr, low, high);
 }
 
-void bubbleSort(int* arr, int N) {
+void bubbleSort(int *arr, int N)
+{
   assert(N > 0);
-  for (int i = 0; i < N - 1; i++) {
+  for (int i = 0; i < N - 1; i++)
+  {
     int swapped = 0;
-    for (int j = 0; j < N - 1; j++) {
-      if (arr[j] > arr[j + 1]) {
+    for (int j = 0; j < N - 1; j++)
+    {
+      if (arr[j] > arr[j + 1])
+      {
         swap(&arr[j], &arr[j + 1]);
         swapped = 1;
       }
     }
     // Minor optimization to avoid extra passes, if array is already sorted
-    if (!swapped) {
+    if (!swapped)
+    {
       // Array is sorted. Exit function
       break;
     }
   }
 }
 
-void selectionSort(int* arr, int N) {
+void selectionSort(int *arr, int N)
+{
   assert(N > 0);
   // Last element would be in the right place,
   // swapping would be unnecessary
-  for (int i = 0; i < N - 1; i++) {
+  for (int i = 0; i < N - 1; i++)
+  {
     swap(&arr[minIndex(arr, i, N)], &arr[i]);
+  }
+}
+
+void heapSort(int *arr, int n)
+{
+  // Build max heap
+  for (int i = n / 2 - 1; i >= 0; i--)
+  {
+    heapify(arr, n, i);
+  }
+  // Heap sort
+  for (int i = n - 1; i >= 0; i--)
+  {
+    swap(&arr[0], &arr[i]);
+    // Heapify root to i
+    heapify(arr, i, 0);
   }
 }
 
 //*****************//
 // helper functions//
 //*****************//
-void hSplit(int* input, int low, int high) {
+void hSplit(int *input, int low, int high)
+{
   int mid;
-  if (low < high) {
+  if (low < high)
+  {
     mid = low + (high - low) / 2;
     hSplit(input, low, mid);
     hSplit(input, mid + 1, high);
@@ -79,47 +109,60 @@ void hSplit(int* input, int low, int high) {
   }
 }
 
-void hMerge(int* arr, int low, int mid, int high) {
+void hMerge(int *arr, int low, int mid, int high)
+{
   const int N1 = mid - low + 1;
   const int N2 = high - mid;
-  int* arr1 = (int*)malloc(N1 * sizeof(int));
-  int* arr2 = (int*)malloc(N2 * sizeof(int));
+  int *arr1 = (int *)malloc(N1 * sizeof(int));
+  int *arr2 = (int *)malloc(N2 * sizeof(int));
 
   // Initialize sub arrays
-  for (int i = 0; i < N1; i++) {
+  for (int i = 0; i < N1; i++)
+  {
     arr1[i] = arr[low + i];
   }
-  for (int i = 0; i < N2; i++) {
+  for (int i = 0; i < N2; i++)
+  {
     arr2[i] = arr[mid + 1 + i];
   }
 
   int i = 0;
   int j = 0;
   int k = low;
-  while (i < N1 && j < N2) {
-    if (arr1[i] < arr2[j]) {
+  while (i < N1 && j < N2)
+  {
+    if (arr1[i] < arr2[j])
+    {
       arr[k++] = arr1[i];
       i++;
-    } else if (arr2[j] < arr1[i]) {
+    }
+    else if (arr2[j] < arr1[i])
+    {
       arr[k++] = arr2[j];
       j++;
-    } else {
+    }
+    else
+    {
       arr[k++] = arr1[i];
       arr[k++] = arr2[j];
       i++;
       j++;
     }
   }
-  while (i < N1) {
+  while (i < N1)
+  {
     arr[k++] = arr1[i++];
   }
-  while (j < N2) {
+  while (j < N2)
+  {
     arr[k++] = arr2[j++];
   }
 }
 
-void hQuickSort(int* input, int low, int high) {
-  if (low < high) {
+void hQuickSort(int *input, int low, int high)
+{
+  if (low < high)
+  {
     // partition and find pivot index
     int mid = hRandomize(input, low, high);
     hQuickSort(input, low, mid - 1);
@@ -127,17 +170,21 @@ void hQuickSort(int* input, int low, int high) {
   }
 }
 
-int hRandomize(int* arr, int low, int high) {
+int hRandomize(int *arr, int low, int high)
+{
   int idx = low + (rand() % (high - low));
   swap(&arr[idx], &arr[high]);
   return hPartition(arr, low, high);
 }
 
-int hPartition(int* arr, int low, int high) {
+int hPartition(int *arr, int low, int high)
+{
   int pivot = arr[high];
   int i = low - 1;
-  for (int j = low; j < high; j++) {
-    if (arr[j] <= pivot) {
+  for (int j = low; j < high; j++)
+  {
+    if (arr[j] <= pivot)
+    {
       i++;
       swap(&arr[j], &arr[i]);
     }
@@ -148,12 +195,36 @@ int hPartition(int* arr, int low, int high) {
   return i;
 }
 
-int minIndex(int* arr, int start, int end) {
+int minIndex(int *arr, int start, int end)
+{
   int idx = start;
-  for (int i = start + 1; i < end; i++) {
-    if (arr[i] < arr[idx]) {
+  for (int i = start + 1; i < end; i++)
+  {
+    if (arr[i] < arr[idx])
+    {
       idx = i;
     }
   }
   return idx;
+}
+
+void heapify(int *arr, int n, int i)
+{
+  int largest = i;
+  int left = 2 * i + 1;
+  int right = 2 * i + 2;
+  if (left < n && arr[left] > arr[largest])
+  {
+    largest = left;
+  }
+
+  if (right < n && arr[right] > arr[largest])
+  {
+    largest = right;
+  }
+  if (largest != i)
+  {
+    swap(&arr[i], &arr[largest]);
+    heapify(arr, n, largest);
+  }
 }

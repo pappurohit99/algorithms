@@ -5,32 +5,38 @@
 #include "sort.h"
 #include "../utils.h"
 
-void copyArr(int* src, int* dest, int n);
+void copyArr(int *src, int *dest, int n);
 
-int main() {
+int main()
+{
 
   // Setup test data
   int n;
-  printf("Enter order of magnitude (between 0 to 6): ");
+  printf("Enter order of magnitude (between 0 to 9): ");
   scanf("%d", &n);
-  int N = 100000;
-  if (n >= 0 && n <= 6) {
+  int N = (int)pow(10, 4);
+  if (n >= 0 && n <= 9)
+  {
     N = (int)pow(10, n);
   }
-  else {
-      printf("Defaulting to 10^5\n");
+  else
+  {
+    printf("Defaulting to 10^4\n");
   }
 
-  int* in = (int*)malloc(N * sizeof(int));
-  for (int i = 0; i < N; i++) {
+  int highMag = N > 5;
+
+  int *in = (int *)malloc(N * sizeof(int));
+  for (int i = 0; i < N; i++)
+  {
     in[i] = rand() % N;
   }
 
   // Clone test data
-  int* clone = (int*)malloc(N * sizeof(int));
+  int *clone = (int *)malloc(N * sizeof(int));
 
   clock_t tic, toc;
-  double t1, t2, t3, t4, t5;
+  double t;
 
   printf("Size of array: %d\n", N);
 
@@ -39,36 +45,52 @@ int main() {
   tic = clock();
   mergeSort(clone, N);
   toc = clock();
-  t2 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Merge sort: %lfms\n", t2);
+  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Merge sort: %lfms\n", t);
 
   copyArr(in, clone, N);
   tic = clock();
   quickSort(clone, N);
   toc = clock();
-  t3 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Quick sort: %lfms\n", t3);
-  
-  copyArr(in, clone, N);
-  tic = clock();
-  insertionSort(clone, N);
-  toc = clock();
-  t1 = (((double)(toc - tic)) / CLOCKS_PER_SEC) * 1000;
-  printf("Insertion sort: %lfms\n", t1);
+  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Quick sort: %lfms\n", t);
 
   copyArr(in, clone, N);
   tic = clock();
-  bubbleSort(clone, N);
+  heapSort(clone, N);
   toc = clock();
-  t4 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Bubble sort: %lfms\n", t4);
+  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Heap sort: %lfms\n", t);
 
-  copyArr(in, clone, N);
-  tic = clock();
-  selectionSort(clone, N);
-  toc = clock();
-  t5 = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Selection sort: %lfms\n", t5);
+  // Slower sorts
+
+  if (!highMag)
+  {
+    copyArr(in, clone, N);
+    tic = clock();
+    insertionSort(clone, N);
+    toc = clock();
+    t = (((double)(toc - tic)) / CLOCKS_PER_SEC) * 1000;
+    printf("Insertion sort: %lfms\n", t);
+
+    copyArr(in, clone, N);
+    tic = clock();
+    bubbleSort(clone, N);
+    toc = clock();
+    t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+    printf("Bubble sort: %lfms\n", t);
+
+    copyArr(in, clone, N);
+    tic = clock();
+    selectionSort(clone, N);
+    toc = clock();
+    t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+    printf("Selection sort: %lfms\n", t);
+  }
+  else
+  {
+    printf("Skipping Insertion sort..\nSkipping Bubble sort..\nSkipping Selection sort\n");
+  }
 
   free(in);
   free(clone);
@@ -81,8 +103,10 @@ int main() {
 }
 
 // Utility function to copy elements from source array to destination array
-void copyArr(int* src, int* dest, int n) {
-  for (int i = 0; i < n; i++) {
+void copyArr(int *src, int *dest, int n)
+{
+  for (int i = 0; i < n; i++)
+  {
     dest[i] = src[i];
   }
 }
