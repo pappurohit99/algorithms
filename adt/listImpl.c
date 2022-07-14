@@ -88,7 +88,7 @@ node *list_removeAt(node *head, int pos)
     {
         if (ctr == pos)
         {
-            ptr->next = ptr->next->data;
+            ptr->next = ptr->next->next;
             break;
         }
         ctr++;
