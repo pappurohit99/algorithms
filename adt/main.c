@@ -32,10 +32,8 @@ void testStack()
 
 void testList()
 {
-	node *listNode = createList();
-	for (int i = 1; i <= 5; i++)
-	{
-		listNode = list_insert(listNode, i * i, 0);
-	}
-	printList(listNode);
+	int arr[] = {1, 2, 3, 4, 5};
+	int size = sizeof(arr) / sizeof(arr[0]);
+	node *head = prepList(arr, size);
+	printList(head);
 }

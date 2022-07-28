@@ -9,6 +9,7 @@ node *createList()
     return NULL;
 }
 
+#pragma region APIs
 int list_get(node *head, int pos)
 {
     int ctr = -1;
@@ -24,74 +25,113 @@ int list_get(node *head, int pos)
     return INT_MIN;
 }
 
+node *list_insert_head(node *head, int key)
+{
+    node *newNode = (node *)malloc(sizeof(node));
+    newNode->data = key;
+    newNode->next = head;
+    head = newNode;
+    return head;
+}
+
+node *list_insert_tail(node *head, int key)
+{
+    node *newNode = (node *)malloc(sizeof(node));
+    newNode->data = key;
+    newNode->next = NULL;
+    if (!list_isEmpty(head))
+    {
+        node *ptr = head;
+        while (ptr && ptr->next)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = newNode;
+    }
+    else
+    {
+        head = newNode;
+    }
+    return head;
+}
+
 node *list_insert(node *head, int key, int pos)
 {
     // Zero indexed
     // Insert after pos - 1
-    int ctr = -1;
-    node *newNode = (node *)malloc(sizeof(node));
-    newNode->data = key;
-    newNode->next = NULL;
-    if (head == NULL)
-    {
-        return newNode;
-    }
     if (pos == 0)
     {
-        newNode->next = head;
-        return newNode;
+        return list_insert_head(head, key);
     }
-    node *ptr = head;
-    while (ptr->next)
+    int size = list_size(head);
+    if (pos == size)
     {
-        ctr = ctr + 1;
-        if (ctr == pos - 1)
-        {
-            newNode->next = ptr->next;
-            ptr->next = newNode;
-            return head;
-        }
+        return list_insert_tail(head, key);
     }
-    ptr->next = newNode;
+    else if (pos < size)
+    {
+        // find the ptr which is index - 1
+        int ctr = -1;
+        node *ptr = head;
+        while (ptr && ptr->next)
+        {
+            ctr++;
+            if (ctr == pos - 1)
+            {
+                break;
+            }
+        }
+        node *temp = (node *)(malloc(sizeof(node)));
+        temp->data = key;
+        temp->next = ptr->next;
+        ptr->next = temp;
+        return head;
+    }
     return head;
 }
 
 node *list_remove(node *head, int key)
 {
-    node *ptr = head;
-    assert(head != NULL);
-    if (head->data == key)
+    int pos = list_find(head, key);
+    if (pos > -1)
     {
-        return head->next;
-    }
-    while (ptr->next)
-    {
-        if (ptr->next->data == key)
-        {
-            ptr->next = ptr->next->next;
-            break;
-        }
+        return list_removeAt(head, pos);
     }
     return head;
 }
 
 node *list_removeAt(node *head, int pos)
 {
-    node *ptr = head;
-    assert(head != NULL);
-    if (pos == 0)
+    int size = list_size(head);
+    if (pos >= 0 && pos < size)
     {
-        return head->next;
-    }
-    int ctr = 0;
-    while (ptr->next)
-    {
-        if (ctr == pos)
+        if (pos == 0)
         {
-            ptr->next = ptr->next->next;
-            break;
+            return head->next;
         }
-        ctr++;
+        if (pos == size - 1)
+        {
+            node *ptr = head;
+            while (ptr && ptr->next && ptr->next->next)
+            {
+                ptr = ptr->next;
+            }
+            ptr->next = NULL;
+            return head;
+        }
+        node *ptr = head;
+        int ctr = -1;
+        while (ptr && ptr->next)
+        {
+            ctr++;
+            if (ctr == pos - 1)
+            {
+                break;
+            }
+            ptr = ptr->next;
+        }
+        ptr->next = ptr->next->next;
+        return head;
     }
     return head;
 }
@@ -109,6 +149,22 @@ node *list_replace(node *head, int key, int value)
         ptr = ptr->next;
     }
     return head;
+}
+
+int list_find(node *head, int key)
+{
+    node *ptr = head;
+    int pos = -1;
+    while (ptr)
+    {
+        pos++;
+        if (ptr->data == key)
+        {
+            return pos;
+        }
+        ptr = ptr->next;
+    }
+    return -1;
 }
 
 int list_size(node *head)
@@ -132,9 +188,31 @@ int list_isFull(node *head)
     node *tNode = (node *)malloc(sizeof(node));
     return tNode == NULL;
 }
+#pragma endregion APIS
 
-// Utility APIs
+#pragma region utils
+
+node *prepList(int *arr, int n)
+{
+    node *head = NULL;
+    for (int i = 0; i < n; i++)
+    {
+        head = list_insert_tail(head, arr[i]);
+    }
+    return head;
+}
+
 void printList(node *head)
+{
+    int *arr = getArrayFromList(head);
+    int n = list_size(head);
+    if (n > 0)
+    {
+        printArray(arr, n, ',');
+    }
+}
+
+int *getArrayFromList(node *head)
 {
     const int N = list_size(head);
     if (N > 0)
@@ -146,6 +224,8 @@ void printList(node *head)
             arr[i++] = head->data;
             head = head->next;
         }
-        printArray(arr, N, ',');
+        return arr;
     }
+    return NULL;
 }
+#pragma endregion utils
