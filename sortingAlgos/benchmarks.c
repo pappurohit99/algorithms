@@ -12,19 +12,20 @@ int main()
 
   // Setup test data
   int n;
-  printf("Enter order of magnitude (between 0 to 9): ");
+  printf("Enter order of magnitude (between 0 to 6): ");
   scanf("%d", &n);
   int N = (int)pow(10, 4);
-  if (n >= 0 && n <= 9)
+  if (n >= 0 && n <= 6)
   {
     N = (int)pow(10, n);
   }
   else
   {
+    N = 4;
     printf("Defaulting to 10^4\n");
   }
 
-  int highMag = N > 5;
+  int highMag = N > 4;
 
   int *in = (int *)malloc(N * sizeof(int));
   for (int i = 0; i < N; i++)
