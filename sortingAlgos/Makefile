@@ -6,14 +6,14 @@ clean:
 build: main benchmarks
 
 main: sorting
-	gcc $(CFLAGS) main.c derived/*.o -o derived/main.out
+	clang $(CFLAGS) main.c derived/*.o -o derived/main.out
 
 benchmarks: sorting
-	gcc $(CFLAGS) benchmarks.c derived/*.o -o derived/benchmarks.out
+	clang $(CFLAGS) benchmarks.c derived/*.o -o derived/benchmarks.out
 
 utils:
 	mkdir -p derived
-	gcc $(CFGLAGS) -c ../utils.c -o derived/utils.o
+	clang $(CFGLAGS) -c ../utils.c -o derived/utils.o
 
 sorting: utils
-	gcc $(CFLAGS) -c sort.c -o derived/sort.o
+	clang $(CFLAGS) -c sort.c -o derived/sort.o
