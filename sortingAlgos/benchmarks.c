@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 #include "sort.h"
 #include "../utils.h"
 
@@ -9,89 +10,98 @@ void copyArr(int *src, int *dest, int n);
 
 int main()
 {
+  // Declare variables
+  clock_t tic, toc;
+  double t;
+  int numel, order;
+
+  // declare constants
+  int const DEFAULT_ORDER = 5;
+  int const MIN_ORDER = 0;
+  int const MAX_ORDER = 6;
+
+  int const DEFAULT_NO_ELEMENTS = (int)(pow(10, DEFAULT_ORDER));
 
   // Setup test data
-  int n;
   printf("Enter order of magnitude (between 0 to 6): ");
-  scanf("%d", &n);
-  int N = (int)pow(10, 4);
-  if (n >= 0 && n <= 6)
+  scanf("%d", &order);
+  if (order >= MIN_ORDER && order <= MAX_ORDER)
   {
-    N = (int)pow(10, n);
+    numel = (int)(pow(10, order));
   }
   else
   {
-    N = 4;
-    printf("Defaulting to 10^4\n");
+    numel = DEFAULT_NO_ELEMENTS;
+    printf("Defaulting to %d as number of elements\n", numel);
   }
 
-  int highMag = N > 4;
-
-  int *in = (int *)malloc(N * sizeof(int));
-  for (int i = 0; i < N; i++)
+  int *in = (int *)malloc(numel * sizeof(int));
+  for (int i = 0; i < numel; i++)
   {
-    in[i] = rand() % N;
+    in[i] = rand() % numel;
   }
 
   // Clone test data
-  int *clone = (int *)malloc(N * sizeof(int));
+  int *clone = (int *)malloc(numel * sizeof(int));
 
-  clock_t tic, toc;
-  double t;
-
-  printf("Size of array: %d\n", N);
+  printf("Size of array: %d\n", numel);
 
   // Run benchmarks
-  copyArr(in, clone, N);
-  tic = clock();
-  mergeSort(clone, N);
-  toc = clock();
-  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Merge sort: %lfms\n", t);
 
-  copyArr(in, clone, N);
+  // Merge sort
+  copyArr(in, clone, numel);
   tic = clock();
-  quickSort(clone, N);
+  mergeSort(clone, numel);
   toc = clock();
   t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Quick sort: %lfms\n", t);
+  printf("Merge sort: %lf ms\n", t);
 
-  copyArr(in, clone, N);
+  // Quick sort
+  copyArr(in, clone, numel);
   tic = clock();
-  heapSort(clone, N);
+  quickSort(clone, numel);
   toc = clock();
   t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-  printf("Heap sort: %lfms\n", t);
+  printf("Quick sort: %lf ms\n", t);
+
+  // Heap sort
+  copyArr(in, clone, numel);
+  tic = clock();
+  heapSort(clone, numel);
+  toc = clock();
+  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Heap sort: %lf ms\n", t);
 
   // Slower sorts
 
-  if (!highMag)
+  // Reallocate if too many elements
+  if (order > DEFAULT_ORDER)
   {
-    copyArr(in, clone, N);
-    tic = clock();
-    insertionSort(clone, N);
-    toc = clock();
-    t = (((double)(toc - tic)) / CLOCKS_PER_SEC) * 1000;
-    printf("Insertion sort: %lfms\n", t);
-
-    copyArr(in, clone, N);
-    tic = clock();
-    bubbleSort(clone, N);
-    toc = clock();
-    t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-    printf("Bubble sort: %lfms\n", t);
-
-    copyArr(in, clone, N);
-    tic = clock();
-    selectionSort(clone, N);
-    toc = clock();
-    t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
-    printf("Selection sort: %lfms\n", t);
+    numel = DEFAULT_NO_ELEMENTS;
+    clone = realloc(clone, numel * sizeof(int));
+    printf("Downsizing sample to %d for performance reasons\n", numel);
   }
-  else
-  {
-    printf("Skipping Insertion sort..\nSkipping Bubble sort..\nSkipping Selection sort\n");
-  }
+
+  copyArr(in, clone, numel);
+  tic = clock();
+  insertionSort(clone, numel);
+  toc = clock();
+  t = (((double)(toc - tic)) / CLOCKS_PER_SEC) * 1000;
+  printf("Insertion sort: %lf ms\n", t);
+
+  copyArr(in, clone, numel);
+  tic = clock();
+  bubbleSort(clone, numel);
+  toc = clock();
+  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Bubble sort: %lf ms\n", t);
+
+  copyArr(in, clone, numel);
+  tic = clock();
+  selectionSort(clone, numel);
+  toc = clock();
+  t = ((double)(toc - tic)) / CLOCKS_PER_SEC * 1000;
+  printf("Selection sort: %lf ms\n", t);
 
   free(in);
   free(clone);

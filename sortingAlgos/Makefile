@@ -1,4 +1,13 @@
-CFLAGS = -Wall -g -std=c11 -fdiagnostics-color=always
+CFLAGS = -Werror -Wall -std=c11 -fdiagnostics-color=always
+
+ifdef DEBUG
+	CFLAGS += -g -fsanitize=address -fno-omit-frame-pointer -o1
+endif
+
+.DEFAULT_GOAL := benchmarks
+.PHONY: clean
+
+all: clean build
 
 clean:
 	rm -rf derived

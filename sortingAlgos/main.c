@@ -7,16 +7,7 @@
 
 int main()
 {
-  int arr[] = {6, 7, 2, 5, 3, 1, 8, 4};
-  const int N = sizeof(arr) / sizeof(arr[0]);
-
-  printf("Initial array\n");
-  printArray(arr, N, ',');
-
-  heapSort(arr, N);
-
-  printf("Sorted array\n");
-  printArray(arr, N, ',');
-
+  // Playground file to test sorting algorithms
+  // Refer to benchmarks.c for comparisons
   return 0;
 }
