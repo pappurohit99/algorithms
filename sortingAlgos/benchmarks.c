@@ -6,6 +6,7 @@
 #include "sort.h"
 #include "../utils.h"
 
+void populateArr(int *arr, int n);
 void copyArr(int *src, int *dest, int n);
 
 int main()
@@ -36,10 +37,7 @@ int main()
   }
 
   int *in = (int *)malloc(numel * sizeof(int));
-  for (int i = 0; i < numel; i++)
-  {
-    in[i] = rand() % numel;
-  }
+  populateArr(in, numel);
 
   // Clone test data
   int *clone = (int *)malloc(numel * sizeof(int));
@@ -111,6 +109,15 @@ int main()
   scanf("%s", s);
 
   return 0;
+}
+
+// Utility function to populate array with random values
+void populateArr(int *arr, int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    arr[i] = rand() % n;
+  }
 }
 
 // Utility function to copy elements from source array to destination array
